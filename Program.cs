@@ -4,7 +4,6 @@ using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
 {
@@ -39,17 +38,18 @@ app.MapPost("/items", async (ToDoDbContext dbContext, Item newItem) =>
     return Results.Created($"/items/{newItem.Id}", newItem);
 });
 
-app.MapPut("/items/${id}", async (ToDoDbContext dbContext, int taskId, Item updatedItem) =>
+app.MapPut("/items/{id}", async (ToDoDbContext dbContext, int id, Item updatedItem) =>
 {
-    var existingItem = await dbContext.Items.FindAsync(taskId);
+    var existingItem = await dbContext.Items.FindAsync(id);
     if (existingItem == null) return Results.NotFound();
 
     existingItem.Name = updatedItem.Name;
+    existingItem.IsComplete = updatedItem.IsComplete;
     await dbContext.SaveChangesAsync();
     return Results.NoContent();
 });
 
-app.MapDelete("/items/${id}", async (int id,ToDoDbContext dbContext ) =>
+app.MapDelete("/items/{id}", async (int id,ToDoDbContext dbContext ) =>
 {
 
     var itemToDelete = await dbContext.Items.FindAsync(id);
@@ -60,18 +60,20 @@ app.MapDelete("/items/${id}", async (int id,ToDoDbContext dbContext ) =>
 });
 
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseRouting();
 app.UseCors("AllowAnyOrigin");
+
 app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllers();
 });
+
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");

@@ -102,3 +102,4 @@ C:\Users\User\Downloads\TodoApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.
 C:\Users\User\Downloads\TodoApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\User\Downloads\TodoApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\User\Downloads\TodoApi\obj\Debug\net8.0\TodoApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\User\Downloads\TodoApi\obj\Debug\net8.0\TodoApi.sourcelink.json
